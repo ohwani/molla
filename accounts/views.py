@@ -3,91 +3,62 @@ from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
+
 from .serializers import UserSerializer
 
 from .models import User
+
 # Create your views here.
 
-
-@api_view(['GET'])
-def accountsOverview(request):
-    api_urls = {
-        'id': 1,
-        'username': 'ohwani',
-        'password': 12341234,
-        'emali': '1234@naver.com'
-    }
-
-    return Response(api_urls)
+from rest_framework import viewsets
 
 
-@api_view(['GET'])
-def userList(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-
-@api_view(['POST'])
-def userCreate(request):
-    serializer = UserSerializer(data=request.data)
-
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def userDetail(request, pk):
-    if request.method == 'GET':
-        user = User.objects.get(id=pk)
-        serializer = UserSerializer(user, many=False)
-        return Response(serializer.data)
-
-    elif request.method == 'PATCH':
-        user = User.objects.get(id=pk)
-        serializer = UserSerializer(instance=user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-    else:
-        user = User.objects.get(id=pk)
-        user.delete()
-        return Response(serializer.data, status=204)
-
-
-# @api_view(['GET'])
-# def userDetail(request, pk):
-#     user = User.objects.get(id=pk)
-#     serializer = UserSerializer(user, many=False)
-#     return Response(serializer.data)
-
-# @api_view(['PATCH'])
-# def userUpdate(request, pk):
-#     user = User.objects.get(id=pk)
-
-#     serializer = UserSerializer(instance=user, data=request.data)
-
-#     if serializer.is_valid():
-#         serializer.save()
+# @api_view(['GET', 'POST'])
+# def userList(request):
+#     if request.method == 'GET':
+#         users = User.objects.all()
+#         serializer = UserSerializer(users, many=True)
 #         return Response(serializer.data)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['DELETE'])
-# def userDelete(request):
-#     user = User.objects.get(id=pk)
-#     user.delete()
+#     elif request.method == 'POST':
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
 
-#     return Response(serializer.data)
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def userDetail(request, pk):
+#     if request.method == 'GET':
+#         user = User.objects.get(id=pk)
+#         serializer = UserSerializer(user, many=False)
+#         return Response(serializer.data)
+
+#     elif request.method == 'PATCH':
+#         user = User.objects.get(id=pk)
+#         serializer = UserSerializer(instance=user, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=201)
+#         return Response(serializer.errors, status=400)
+#     else:
+#         user = User.objects.get(id=pk)
+#         user.delete()
+#         return Response(serializer.data, status=204)
 
 
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-# from .models import User
-# from .serializers import UserSerializer
+# class UserListMixins(generics.ListCreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
+
+# class UserDetailMixins(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 # class UserListAPIView(APIView):
 #     def get(self, request):
