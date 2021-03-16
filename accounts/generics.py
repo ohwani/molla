@@ -1,6 +1,5 @@
 from rest_framework import mixins, generics
 
-
 class ListCreateAPIView(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,

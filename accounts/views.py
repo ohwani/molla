@@ -11,13 +11,15 @@ from .models import User
 
 # Create your views here.
 
+'''viewset 이용 '''
 from rest_framework import viewsets
-
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+'''FBV api_view decorator 이용'''
 # @api_view(['GET', 'POST'])
 # def userList(request):
 #     if request.method == 'GET':
@@ -50,15 +52,18 @@ class UserViewSet(viewsets.ModelViewSet):
 #         user.delete()
 #         return Response(serializer.data, status=204)
 
+'''generics.py + mixin''' 
 
 # class UserListMixins(generics.ListCreateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
 
-
 # class UserDetailMixins(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
+
+
+'''CBV apiview'''
 
 # class UserListAPIView(APIView):
 #     def get(self, request):
