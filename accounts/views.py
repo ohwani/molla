@@ -18,6 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+# class ReviewCreateAPIView()
 
 '''FBV api_view decorator 이용'''
 # @api_view(['GET', 'POST'])
