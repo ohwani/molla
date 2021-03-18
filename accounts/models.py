@@ -8,13 +8,12 @@ from django.core.validators import RegexValidator
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from .regex import RegEx, Message
+from .regex import EMAIL_RegEx, Message
 import re
 
 
 class User(models.Model):
-    email = models.EmailField(
-        validators=[RegexValidator(RegEx['email'], Message['email'])])
+    email = models.EmailField()
     password = models. CharField(max_length=1000, null=True)
     password2 = models.CharField(max_length=1000, null=True)
 

@@ -3,20 +3,19 @@ from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import viewsets
 
-from .serializers import UserSerializer
+from .serializers import UserRegistrationSerializer
 
 from .models import User
 
 # Create your views here.
 
 '''viewset 이용 '''
-from rest_framework import viewsets
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserRegisterViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserRegistrationSerializer
 
 # class ReviewCreateAPIView()
 
