@@ -1,5 +1,8 @@
+from django.contrib.auth import authenticate
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
 from .models import User
 import re
 
@@ -33,16 +36,25 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         attr.set_password
         
         return attrs
+class LoginSerializer(serializers.Serializer):
 
+    class Meta:
+        model = User
+        fields = ['emali', 'passowrd']
+    
+    def validate(self, attrs):
+        user = authenticate(email=attrs['email'],password=attrs['password'])
+
+        if not user:
+            raise serializers.ValidationError('Incorrect email or password')
+    return attrs
+    
     # def validate_email(self, attrs):
     #     email = User.objects.filter(email=attrs)
     #     if email.exists():
     #         raise serializers.ValidationError('This email already exists')
     #     return attrs
     
-    
-
-
     # def validate(self, attrs):
     #     email = User.objects.filter(email=attrs['email'])
     #     if email.exists():

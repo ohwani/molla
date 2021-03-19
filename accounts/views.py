@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from rest_framework.decorators import api_view
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, authentication
 
 from .serializers import UserRegistrationSerializer
 
@@ -16,6 +18,50 @@ from .models import User
 class UserRegisterViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
+
+class UserLoginView(views.APIView):
+    permission_classes = (permissions.AllowAny)
+    authentication_classes = (CsrfExemptSessionAuthentication)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # class ReviewCreateAPIView()
 
@@ -52,7 +98,7 @@ class UserRegisterViewSet(viewsets.ModelViewSet):
 #         user.delete()
 #         return Response(serializer.data, status=204)
 
-'''generics.py + mixin''' 
+# '''generics.py + mixin''' 
 
 # class UserListMixins(generics.ListCreateAPIView):
 #     queryset = User.objects.all()
