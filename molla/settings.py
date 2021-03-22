@@ -132,12 +132,16 @@ STATIC_URL = '/static/'
 # Authentication
 # AUTH_USER_MODEL = 'accounts.User'
 
+# JWT_AUTH = { 'JWT_ALLOW_REFRESH' : True, }
+
 REST_FRAMEWORK = {
+    
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ]
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthenntication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ],
 }
 
 # Only}

@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny
+# from rest_framework.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, authentication
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import UserRegistrationSerializer
+from .serializers import UserSerializer
 
 from .models import User
 
@@ -15,13 +16,27 @@ from .models import User
 
 '''viewset 이용 '''
 
-class UserRegisterViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserRegistrationSerializer
+    serializer_class = UserSerializer
+    permissions_classes = [IsAuthenticated]
+    # authentication_classes = (JWTAuthentication)
 
-class UserLoginView(views.APIView):
-    permission_classes = (permissions.AllowAny)
-    authentication_classes = (CsrfExemptSessionAuthentication)
+
+# class UserLoginView(views.APIView):
+#     permission_classes = (permissions.AllowAny)
+#     authentication_classes = (CsrfExemptSessionAuthentication)
+
+#     def post(self, request):
+#         serializer = LoginSerializer(data = request.data)
+#         serializer.is_valid()
+
+
+
+# class LoginViewSet(viewsets.ModelViewSet):
+
+#     queryset = User.objects.all()
+
 
 
 
