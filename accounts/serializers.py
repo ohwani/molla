@@ -1,9 +1,9 @@
-from django.contrib.auth import authenticate
+# from django.contrib.auth import authenticate
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 # from rest_framework_simplejwt.serializers import TokenObtainSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+# from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
 import re
@@ -40,37 +40,37 @@ class UserSerializer(serializers.ModelSerializer):
         return attrs
 
 
-class LoginSerializer(serializers.Serializer):
+# class LoginSerializer(serializers.Serializer):
 
-    class Meta:
-        model = User
-        fields = ['emali', 'passowrd']
+#     class Meta:
+#         model = User
+#         fields = ['emali', 'passowrd']
     
-    def validate(self, attrs):
-        email = attrs.get('email', None) 
-        password = attrs.get('password', None)
-        user = authenticate(email=email, password=password)
+#     def validate(self, attrs):
+#         email = attrs.get('email', None) 
+#         password = attrs.get('password', None)
+#         user = authenticate(email=email, password=password)
 
-        if user is None:
-            raise serializers.ValidationError("Invalid login credentials")
-        try:
-            refresh = RefreshToken.for_user(user)
-            refresh_token = str(refresh)
-            access_token = str(refresh.access_token)
+#         if user is None:
+#             raise serializers.ValidationError("Invalid login credentials")
+#         try:
+#             refresh = RefreshToken.for_user(user)
+#             refresh_token = str(refresh)
+#             access_token = str(refresh.access_token)
 
-            update_last_login(None, user)
+#             update_last_login(None, user)
 
-            validation = {
-                'access': access_token,
-                'refresh': refresh_token,
-                'email': user.email,
-                'role': user.role,
-            }
+#             validation = {
+#                 'access': access_token,
+#                 'refresh': refresh_token,
+#                 'email': user.email,
+#                 'role': user.role,
+#             }
 
-            return validation
+#             return validation
         
-        except AuthUser.DoesNotExist:
-            raise serializers.ValidationError("Invalid login credentials")
+#         except AuthUser.DoesNotExist:
+#             raise serializers.ValidationError("Invalid login credentials")
 
     
     # def validate_email(self, attrs):
